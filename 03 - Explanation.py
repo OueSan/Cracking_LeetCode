@@ -28,6 +28,7 @@ Here’s a possible solution in Python:
 
 
 import pandas as pd
+from typing import List
 
 def create_dataframe(student_data):
     # Create a DataFrame from the 2D list, with columns 'student_id' and 'age'
@@ -37,6 +38,7 @@ def create_dataframe(student_data):
 #01
 Detailed Explanation: Imports:
 import pandas as pd: This imports the pandas library, which is used for data manipulation in Python.
+#PS: in real python code you have to add this library, instead you gonna get one "NameError: name 'List' is not defined. Did you mean: 'list'?"
 from typing import List: This allows you to use the List type to indicate that the input student_data will be a list of lists of integers.
 
 #02
@@ -49,5 +51,7 @@ pd.DataFrame(student_data, columns=['student_id', 'age']): This line creates a D
 
 #04
 Returning the DataFrame:
-return df: This line returns the created DataFrame.
-How the function works: When you pass the student_data list to the createDataframe function, it will generate and return a DataFrame that has the student_id and age columns, exactly in the order of the provided data.
+return df: #This line returns the created DataFrame.
+
+
+#How the function works: When you pass the student_data list to the createDataframe function, it will generate and return a DataFrame that has the student_id and age columns, exactly in the order of the provided data.
