@@ -1,0 +1,1 @@
+#drop_duplicates(subset='email', keep='first'): This function removes duplicate rows based on the email column and retains the first occurrence of each unique email.
