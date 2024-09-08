@@ -40,5 +40,3 @@ Every salary has been doubled.
 import pandas as pd
 
 def modifySalaryColumn(employees: pd.DataFrame) -> pd.DataFrame:
-    
-    
