@@ -40,3 +40,8 @@ Output:
 +------------+------------+-----------+--------------+
 Explanation: 
 The column names are changed accordingly.
+
+import pandas as pd
+
+def renameColumns(students: pd.DataFrame) -> pd.DataFrame:
+    
