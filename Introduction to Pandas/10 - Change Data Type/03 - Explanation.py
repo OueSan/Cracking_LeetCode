@@ -5,7 +5,7 @@ The DataFrame is returned with the updated data type for the grade column.
 You can use this function with the provided example like this:
 
 python
-Copiar código
+
 # Example DataFrame
 data = {'student_id': [1, 2],
         'name': ['Ava', 'Kate'],
@@ -21,7 +21,7 @@ updated_students = changeDatatype(students)
 print(updated_students)
 This will output:
 
-Copiar código
+
    student_id  name  age  grade
 0           1   Ava    6     73
 1           2  Kate   15     87
