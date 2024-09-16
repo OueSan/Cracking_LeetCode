@@ -42,3 +42,8 @@ Explanation:
 All animals weighing more than 100 should be included in the results table.
 Tatiana's weight is 464, Jonathan's weight is 463, Tommy's weight is 349, and Alex's weight is 328.
 The results should be sorted in descending order of weight.
+
+import pandas as pd
+
+def findHeavyAnimals(animals: pd.DataFrame) -> pd.DataFrame:
+    
