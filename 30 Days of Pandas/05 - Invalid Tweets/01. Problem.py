@@ -35,3 +35,12 @@ Output:
 Explanation: 
 Tweet 1 has length = 11. It is a valid tweet.
 Tweet 2 has length = 33. It is an invalid tweet.
+
+Pandas
+import pandas as pd
+
+def invalid_tweets(tweets: pd.DataFrame) -> pd.DataFrame:
+
+
+MySQL
+# Write your MySQL query statement below
