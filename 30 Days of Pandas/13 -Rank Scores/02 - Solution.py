@@ -4,3 +4,6 @@ Approach
   2. Sort the DataFrame by score in descending order. This can be achieved using the sort_values method. 
 '''
 
+import pandas as pd
+
+def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
