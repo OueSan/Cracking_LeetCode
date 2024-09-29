@@ -16,7 +16,7 @@ def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
     return result_df
 
 
-#Best memory approach
+#Best memory approach Memory: 67.9mb
 
 '''
 import pandas as pd
@@ -34,5 +34,19 @@ def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
             top.append(rank)
             top_score.append(i)
     return pd.DataFrame({"score":top_s, "rank" : top})
-    
+
+'''
+
+#Best RunTime Approach Runtime: 286ms
+
+
+
+
+'''
+import pandas as pd
+
+def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
+    scores = scores.sort_values(by = 'score', ascending = False)
+        scores['rank'] = scores['score'].rank(method = 'dense', ascending = False)
+        return scores[['score', 'rank']]
 '''
