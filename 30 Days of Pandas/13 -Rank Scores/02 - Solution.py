@@ -7,3 +7,32 @@ Approach
 import pandas as pd
 
 def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
+    # Use the rank method to assign ranks to the scores in descending order with no gaps
+    scores['rank'] = scores['score'].rank(method='dense', ascending=False)
+
+    # Drop id column & Sort the DataFrame by score in descending order
+    result_df = scores.drop('id', axis=1).sort_values(by='score', ascending=False)
+
+    return result_df
+
+
+#Best memory approach
+
+'''
+import pandas as pd
+
+def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
+    top_s = sorted(scores.score.values, reverse = True)
+    top = []
+    top_score = []
+    rank = 0
+    for i in top_s:
+        if i in top_score:
+            top.append(rank)
+        else:
+            rank += 1
+            top.append(rank)
+            top_score.append(i)
+    return pd.DataFrame({"score":top_s, "rank" : top})
+    
+'''
