@@ -43,4 +43,4 @@ So the result is customer_number 3.
 import pandas as pd
 
 def largest_orders(orders: pd.DataFrame) -> pd.DataFrame:
-    
+ 
