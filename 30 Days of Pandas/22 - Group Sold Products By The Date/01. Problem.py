@@ -50,4 +50,3 @@ For 2020-06-02, the Sold item is (Mask), we just return it.
 import pandas as pd
 
 def categorize_products(activities: pd.DataFrame) -> pd.DataFrame:
-    
