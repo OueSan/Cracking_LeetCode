@@ -5,3 +5,13 @@ function createHelloWorld() {
     return greeting;
   };
 }
+
+/* 
+function createhellowords(){
+  const greeting = "Hello World"; 
+      
+  retunr function() {
+  return greeting;
+  };
+}
+*/
