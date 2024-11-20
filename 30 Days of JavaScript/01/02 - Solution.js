@@ -1,13 +1,12 @@
-function createHelloWorld() {
-  return "Hello World";
-}
+/**
+ * @return {Function}
+ */
 
-/* 
-function createhellowords(){
-  const greeting = "Hello World"; 
-      
-  retunr function() {
-  return greeting;
-  };
-}
+var createHelloWorld = function() {
+  return () => 'Hello World';
+};
+
+/**
+* const f = createHelloWorld();
+* f(); // "Hello World"
 */
