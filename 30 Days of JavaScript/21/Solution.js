@@ -1,11 +1,16 @@
 /**
- * @param {Object|Array} obj
- * @return {boolean}
+ * @param {Array} arr
+ * @param {number} size
+ * @return {Array[]}
  */
-var isEmpty = function(obj) {
-  if(typeof obj === "object"){
-      return Object.keys(obj).length < 1;
-  } else {
-      return obj.length < 1
-  }
+const chunk = (arr, size) => {
+  return arr.reduce((chunkedArray, element) => {
+    const lastChunk = chunkedArray[chunkedArray.length - 1];
+    if (!lastChunk || lastChunk.length === size) {
+      chunkedArray.push([element]);
+    } else {
+      lastChunk.push(element);
+    }
+    return chunkedArray;
+  }, []);
 };

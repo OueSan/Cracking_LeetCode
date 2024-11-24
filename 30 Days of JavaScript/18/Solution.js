@@ -1,21 +1,22 @@
-const TimeLimitedCache = function() {
-  this.cache = new Map();  // Using Map so we don't need a size variable
+/**
+ * @param {Function} fn
+ * @param {number} t milliseconds
+ * @return {Function}
+ */
+var debounce = function(fn, t) {
+  let timeout = null;
+  
+  return function(...args) {
+      if(timeout)
+          clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), t);
+  }
 };
 
-TimeLimitedCache.prototype.set = function(key, value, duration) {
-  let found = this.cache.has(key);
-  if (found) clearTimeout(this.cache.get(key).ref);  // Cancel previous timeout
-  this.cache.set(key, {
-      value,  // Equivalent to `value: value`
-      ref: setTimeout(() => this.cache.delete(key), duration)
-  });
-  return found;
-};
 
-TimeLimitedCache.prototype.get = function(key) {
-  return this.cache.has(key) ? this.cache.get(key).value : -1;
-};
-
-TimeLimitedCache.prototype.count = function() {
-  return this.cache.size;
-};
+/**
+* const log = debounce(console.log, 100);
+* log('Hello'); // cancelled
+* log('Hello'); // cancelled
+* log('Hello'); // Logged at t=100ms
+*/
