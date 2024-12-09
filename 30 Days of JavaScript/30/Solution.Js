@@ -1,34 +1,36 @@
-/**
- * @param {number[]} nums
- * @return {void}
- */
-var ArrayWrapper = function (nums) {
-    this.nums = nums
-
-};
-
-/**
- * @return {number}
- */
-ArrayWrapper.prototype.valueOf = function () {
-
-    return this.nums.reduce((acc, cur) => {
-        acc = acc + cur
-        return acc
-    }, 0)
-}
-
-/**
- * @return {string}
- */
-ArrayWrapper.prototype.toString = function () {
-    return  JSON.stringify(this.nums)
-}
-
-/**
- * const obj1 = new ArrayWrapper([1,2]);
- * const obj2 = new ArrayWrapper([3,4]);
- * obj1 + obj2; // 10
- * String(obj1); // "[1,2]"
- * String(obj2); // "[3,4]"
- */
+class Calculator {
+    constructor(value) {
+      this.result = value;
+    }
+    add(value) {
+      this.result += value;
+      return this;
+    }
+  
+    subtract(value) {
+      this.result -= value;
+      return this;
+    }
+  
+    multiply(value) {
+      this.result *= value;
+      return this;
+    }
+  
+    divide(value) {
+      if (value === 0) {
+        throw new Error('Division by zero is not allowed');
+      }
+      this.result /= value;
+      return this;
+    }
+  
+    power(value) {
+      this.result = Math.pow(this.result, value);
+      return this;
+    }
+  
+    getResult() {
+      return this.result;
+    }
+  }
