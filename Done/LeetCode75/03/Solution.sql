@@ -1,3 +1,0 @@
-sigamaboy
-
-a
