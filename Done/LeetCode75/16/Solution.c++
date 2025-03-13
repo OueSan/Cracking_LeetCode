@@ -1,34 +1,22 @@
 class Solution {
-
-  static {
-      for (int i = 0; i < 300; i++) maxVowels("",0);
-  }
-
-  public static int maxVowels(String s, int k) {
-      char[] cs = s.toCharArray();
-      int[] vowel = new int[26];
-      vowel['a'-'a'] = 1;
-      vowel['e'-'a'] = 1;
-      vowel['i'-'a'] = 1;
-      vowel['o'-'a'] = 1;
-      vowel['u'-'a'] = 1;
-
-      int vowels = 0;
-      for (int i = 0; i < k; i++) {
-          vowels += vowel[cs[i]-'a'];
+  public:
+      bool is_vowel(char c) {
+          return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
       }
-
-      if (vowels == k) return k;
-      
-      int maxVowels = vowels;
-      for (int i = 0, j = k, n = cs.length; j < n; j++, i++) {
-          vowels = vowels + vowel[cs[j]-'a'] - vowel[cs[i]-'a'];
-          if (maxVowels < vowels) {
-              maxVowels = vowels;
-              if (maxVowels == k) break;
+  
+      int maxVowels(string s, int k) {
+          int n = s.size();
+          int r, res = 0, curr = 0;
+          for (r = 0; r < k; ++r) {
+              if (is_vowel(s[r]))
+                  curr++;
           }
+          res = curr;
+          for (r = k; r < n; ++r) {
+              curr -= is_vowel(s[r - k]);
+              curr += is_vowel(s[r]);
+              res = max(res, curr);
+          }
+          return res;
       }
-      
-      return maxVowels;
-  }
-}
+  };
