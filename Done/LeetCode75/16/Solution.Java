@@ -1,20 +1,18 @@
 class Solution {
-  public double findMaxAverage(int[] nums, int k) {
-      double sum = 0;
-
-      // Compute initial window sum
-      for (int i = 0; i < k; i++) {
-          sum += nums[i];
+  public int longestOnes(int[] nums, int k) {
+      int left = 0, maxLength = 0, zeroCount = 0;
+      for (int right = 0; right < nums.length; ++right) {
+          if (nums[right] == 0) {
+              zeroCount++;
+          }
+          while (zeroCount > k) {
+              if (nums[left] == 0) {
+                  zeroCount--;
+              }
+              left++;
+          }
+          maxLength = Math.max(maxLength, right - left + 1);
       }
-
-      double maxSum = sum;
-
-      // Slide the window
-      for (int i = k; i < nums.length; i++) {
-          sum = sum - nums[i - k] + nums[i]; // Remove leftmost, add rightmost
-          maxSum = Math.max(maxSum, sum);
-      }
-
-      return maxSum / k; // Return the maximum average
+      return maxLength;
   }
 }
