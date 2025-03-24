@@ -11,7 +11,7 @@ class RecentCounter {
   public int ping(int t) {
       while (start < end && (t - records[start] > 3000)) { 
           start++; // if the difference in time is greater than 3000ms, 
-          // than increase the value of start unitl it's equal or less than 3000ms.
+          // than increase the value of start unitl it's equal or less than 30000ms.
       }
       records[end++] = t; // Inserting the current time at the end
       return end - start; // Returning the answer including the element added just now.
