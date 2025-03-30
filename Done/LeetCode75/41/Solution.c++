@@ -1,32 +1,27 @@
 class Solution {
-  private int totalLvl;
-  private int sumAtLvl[]=new int [1000];
-  public int maxLevelSum(TreeNode root) {
-      int res=1, max=Integer.MIN_VALUE;
-
-      helper(root,0);
-
-      for(int i=0;i<=totalLvl;i++)
-      {
-          int sum=sumAtLvl[i];
-
-          if(sum>max){
-              max=sum;
-              res=i+1;
-          }
+  public:
+      int maxLevelSum(TreeNode* root) {
+          int ans = 0;
+          int lvl = 1;
+          int maxSum = INT_MIN;
+          queue<TreeNode*> q;
+          q.push(root);
+          while(!q.empty()){
+              int n = q.size();
+              int sum = 0;
+              for(int i = 0; i < n; i++){
+                  TreeNode* ptr = q.front();
+                  q.pop();
+  
+                  sum += ptr->val;
+  
+                  if(ptr->left) q.push(ptr->left);
+                  if(ptr->right) q.push(ptr->right);
+              };
+              if(sum > maxSum) ans = lvl;
+              maxSum = max(sum,maxSum);
+              lvl++;
+          };
+          return ans ;
       }
-      return res;
-  }
-
-  private void helper(TreeNode node,int l)
-  {
-      if(node==null)return;
-
-      sumAtLvl[l]+=node.val;
-
-      totalLvl=Math.max(totalLvl,l);
-
-      helper(node.right,l+1);
-      helper(node.left,l+1);
-  }
-}
+  };
