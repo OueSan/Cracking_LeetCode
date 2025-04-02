@@ -31,7 +31,7 @@ Constraints:
 The number of nodes in the tree is in the range [0, 104].
 -105 <= Node.val <= 105
 Each node has a unique value.
-root is a valid binary search tree.
+root is a valid binary search treee.
 -105 <= key <= 105
  
 
