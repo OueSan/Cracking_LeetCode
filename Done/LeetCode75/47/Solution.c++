@@ -1,68 +1,65 @@
-
 class Solution {
-  public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-      Map<String, Map<String, Double>> graph = buildGraph(equations, values);
-      double[] results = new double[queries.size()];
-
-      for (int i = 0; i < queries.size(); i++) {
-          List<String> query = queries.get(i);
-          String dividend = query.get(0);
-          String divisor = query.get(1);
-
-          if (!graph.containsKey(dividend) || !graph.containsKey(divisor)) {
-              results[i] = -1.0;
-          } else {
-              results[i] = bfs(dividend, divisor, graph);
-          }
-      }
-
-      return results;
-  }
-
-  private Map<String, Map<String, Double>> buildGraph(List<List<String>> equations, double[] values) {
-      Map<String, Map<String, Double>> graph = new HashMap<>();
-
-      for (int i = 0; i < equations.size(); i++) {
-          List<String> equation = equations.get(i);
-          String dividend = equation.get(0);
-          String divisor = equation.get(1);
-          double value = values[i];
-
-          graph.putIfAbsent(dividend, new HashMap<>());
-          graph.putIfAbsent(divisor, new HashMap<>());
-          graph.get(dividend).put(divisor, value);
-          graph.get(divisor).put(dividend, 1.0 / value);
-      }
-
-      return graph;
-  }
-
-  private double bfs(String start, String end, Map<String, Map<String, Double>> graph) {
-      Queue<Pair<String, Double>> queue = new LinkedList<>();
-      Set<String> visited = new HashSet<>();
-      queue.offer(new Pair<>(start, 1.0));
-
-      while (!queue.isEmpty()) {
-          Pair<String, Double> pair = queue.poll();
-          String node = pair.getKey();
-          double value = pair.getValue();
-
-          if (node.equals(end)) {
-              return value;
-          }
-
-          visited.add(node);
-
-          for (Map.Entry<String, Double> neighbor : graph.get(node).entrySet()) {
-              String neighborNode = neighbor.getKey();
-              double neighborValue = neighbor.getValue();
-
-              if (!visited.contains(neighborNode)) {
-                  queue.offer(new Pair<>(neighborNode, value * neighborValue));
+  public:
+      vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+          unordered_map<string, unordered_map<string, double>> graph = buildGraph(equations, values);
+          vector<double> results;
+  
+          for (const auto& query : queries) {
+              const string& dividend = query[0];
+              const string& divisor = query[1];
+  
+              if (graph.find(dividend) == graph.end() || graph.find(divisor) == graph.end()) {
+                  results.push_back(-1.0);
+              } else {
+                  results.push_back(bfs(dividend, divisor, graph));
               }
           }
+  
+          return results;
       }
-
-      return -1.0;
-  }
-}
+  
+  private:
+      unordered_map<string, unordered_map<string, double>> buildGraph(const vector<vector<string>>& equations, const vector<double>& values) {
+          unordered_map<string, unordered_map<string, double>> graph;
+  
+          for (int i = 0; i < equations.size(); i++) {
+              const string& dividend = equations[i][0];
+              const string& divisor = equations[i][1];
+              double value = values[i];
+  
+              graph[dividend][divisor] = value;
+              graph[divisor][dividend] = 1.0 / value;
+          }
+  
+          return graph;
+      }
+  
+      double bfs(const string& start, const string& end, unordered_map<string, unordered_map<string, double>>& graph) {
+          queue<pair<string, double>> q;
+          unordered_set<string> visited;
+          q.push({start, 1.0});
+  
+          while (!q.empty()) {
+              string node = q.front().first;
+              double value = q.front().second;
+              q.pop();
+  
+              if (node == end) {
+                  return value;
+              }
+  
+              visited.insert(node);
+  
+              for (const auto& neighbor : graph[node]) {
+                  const string& neighborNode = neighbor.first;
+                  double neighborValue = neighbor.second;
+  
+                  if (visited.find(neighborNode) == visited.end()) {
+                      q.push({neighborNode, value * neighborValue});
+                  }
+              }
+          }
+  
+          return -1.0;
+      }
+  };
