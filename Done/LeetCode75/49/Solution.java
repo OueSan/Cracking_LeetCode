@@ -1,48 +1,51 @@
+import java.util.*;
+
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int[][] visited = grid;
-        Queue<int[]> q = new LinkedList<>();
-        int countFreshOrange = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (visited[i][j] == 2) {
-                    q.offer(new int[] {i, j});
-                }
-                if (visited[i][j] == 1) {
-                    countFreshOrange++;
+        int rows = grid.length, cols = grid[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        int fresh = 0;
+
+        // Step 1: Add all initial rotten oranges to the queue
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (grid[r][c] == 2) {
+                    queue.offer(new int[]{r, c});
+                } else if (grid[r][c] == 1) {
+                    fresh++;
                 }
             }
         }
-        if (countFreshOrange == 0)
-            return 0;
-        if (q.isEmpty())
-            return -1;
-        
-        int minutes = -1;
-        int[][] dirs = {{1, 0},{-1, 0},{0, -1},{0, 1}};
-        while (!q.isEmpty()) {
-            int size = q.size();
-            while (size-- > 0) {
-                int[] cell = q.poll();
-                int x = cell[0];
-                int y = cell[1];
-                for (int[] dir : dirs) {
-                    int i = x + dir[0];
-                    int j = y + dir[1];
-                    if (i >= 0 && i < m && j >= 0 && j < n && visited[i][j] == 1) {
-                        visited[i][j] = 2;
-                        countFreshOrange--;
-                        q.offer(new int[] {i, j});
+
+        // No fresh oranges to begin with
+        if (fresh == 0) return 0;
+
+        int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};
+        int minutes = 0;
+
+        // Step 2: BFS to infect adjacent fresh oranges
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            boolean rottedThisMinute = false;
+
+            for (int i = 0; i < size; i++) {
+                int[] pos = queue.poll();
+                for (int[] dir : directions) {
+                    int r = pos[0] + dir[0];
+                    int c = pos[1] + dir[1];
+
+                    if (r >= 0 && r < rows && c >= 0 && c < cols && grid[r][c] == 1) {
+                        grid[r][c] = 2;
+                        queue.offer(new int[]{r, c});
+                        fresh--;
+                        rottedThisMinute = true;
                     }
                 }
             }
-            minutes++;
+
+            if (rottedThisMinute) minutes++;
         }
-        
-        if (countFreshOrange == 0)
-            return minutes;
-        return -1;
+
+        return fresh == 0 ? minutes : -1;
     }
 }
