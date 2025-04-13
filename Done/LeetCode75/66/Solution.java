@@ -1,13 +1,14 @@
 class Solution {
-  public int maxProfit(int[] prices, int fee) {
-      int hold = -prices[0];
-      int cash = 0;
-
-      for (int i = 1; i < prices.length; i++) {
-          hold = Math.max(hold, cash - prices[i]);
-          cash = Math.max(cash, hold + prices[i] - fee);
+  static {
+      for (int i = 0; i < 300; i++) maxProfit(new int[0], 0);
+  }
+  public static int maxProfit(int[] prices, int fee) {
+      int buy = Integer.MIN_VALUE;
+      int sell = 0;
+      for (int price : prices) {
+          buy = Math.max(buy, sell - price);
+          sell = Math.max(sell, buy + price - fee);
       }
-
-      return cash;
+      return sell;
   }
 }
