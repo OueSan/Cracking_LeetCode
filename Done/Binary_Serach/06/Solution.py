@@ -1,5 +1,5 @@
 class Solution:
-    def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
+    def findRightInterval(self, intervals: list[list[int]]) -> list[int]:
         n = len(intervals)
         intervals_with_idx = sorted([(interval, i) for i, interval in enumerate(intervals)], key=lambda x: x[0][0])
         
