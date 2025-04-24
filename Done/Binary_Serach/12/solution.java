@@ -12,7 +12,7 @@ public class Solution extends GuessGame {
           if (guess(mid) == -1)
               high = mid - 1;
           if (guess(mid) == 1)
-              low = mida + 1;
+              low = mid + 1;
       }
 
       return -1;
