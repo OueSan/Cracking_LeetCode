@@ -1,5 +1,21 @@
-package Done.Binary_Serach.21;
+class Solution {
+  public int peakIndexInMountainArray(int[] arr) {
+      int start = 0;
+      int end = arr.length-1;
 
-public class Solution {
-  
+      while(start < end){
+          int mid = start + (end - start)/2;
+
+          if(arr[mid] > arr[mid+1]){
+          //if true you are in the descending part of the array
+              end = mid;
+          }
+          
+          else if(arr[mid] < arr[mid + 1]){
+          //if true you are in the ascending part
+              start = mid +1;
+          }
+      }
+      return start;
+  }
 }
