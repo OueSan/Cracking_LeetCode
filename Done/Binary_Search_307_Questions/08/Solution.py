@@ -12,4 +12,4 @@ class Solution:
             else:
                 left = mid + 1
         
-        return nums[left]1
+        return nums[left]
