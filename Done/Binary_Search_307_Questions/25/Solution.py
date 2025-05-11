@@ -1,28 +1,23 @@
-from sortedcontainers import SortedList
 class Solution:
     def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
-        m, n = len(matrix), len(matrix[0])
-        ans = -math.inf
-        for r1 in range(m):
-            arr = [0] * n  # arr[i] is sum(matrix[r1][c]...matrix[r2][c])
-            for r2 in range(r1, m):
-                for c in range(n): arr[c] += matrix[r2][c]
-                ans = max(ans, self.maxSumSubAarray(arr, n, k))
-        return ans
-
-    def maxSumSubAarray(self, arr, n, k):
-        right = 0  # PrefixSum so far
-        seen = SortedList([0])
-        ans = -math.inf
-        for i in range(n):
-            right += arr[i]
-            left = self.ceiling(seen, right - k)  # right - left <= k -> left >= right - k
-            if left != None:
-                ans = max(ans, right - left)
-            seen.add(right)
-        return ans
-
-    def ceiling(self, sortedList, key):  # O(logN)
-        idx = sortedList.bisect_left(key)
-        if idx < len(sortedList): return sortedList[idx]
-        return None
+        r, c = len(matrix), len(matrix[0])
+        m = [[0] * (c + 1) for _ in range(r + 1)]
+        for i in range(r):
+            if k in matrix[i]:
+                return k
+            m[i + 1] = [0] + list(accumulate(matrix[i]))
+            for j in range(c + 1):
+                m[i + 1][j] += m[i][j]
+        res = -inf
+        for down in range(1, r + 1):
+            for up in range(down):
+                arr = []
+                for i in range(c + 1):
+                    s = m[down][i] - m[up][i]
+                    p = bisect_left(arr, s)
+                    if len(arr) > p:
+                        res = max(res, k - arr[p] + s)
+                        if res == k: 
+                            return res
+                    insort(arr, s + k)
+        return res
