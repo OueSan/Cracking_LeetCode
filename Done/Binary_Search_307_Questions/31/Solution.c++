@@ -1,11 +1,16 @@
 class Solution {
 public:
     int findNthDigit(int n) {
-        string seq;    // To store the sequence
-        int i = 1;     // Start from the number 1
-        while (seq.length() < n) {  
-            seq += to_string(i++);  // Add numbers to the string
+        long digitInNum = 1, start = 1, end = 9;
+        while (n > digitInNum * end) {
+            n -= digitInNum * end; 
+            digitInNum++;
+            start *= 10;
+            end *= 10;               
         }
-        return seq[n - 1] - '0';  // Return the nth digit (adjust for 1-based index)
+
+        long num = start + (n - 1) / digitInNum; 
+        string numStr = to_string(num);   
+        return numStr[(n - 1) % digitInNum] - '0';
     }
 };
