@@ -25,4 +25,4 @@ Constraints:
 1 <= k <= arr.length
 1 <= arr.length <= 104
 arr is sorted in ascending order.
--104 <= arr[i], x <= 104
+-104 <= arr[i], x <= 10
