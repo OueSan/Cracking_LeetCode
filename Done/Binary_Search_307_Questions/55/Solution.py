@@ -1,19 +1,10 @@
 class Solution:
-	def reachNumber(self, target: int) -> int:
-		queue = [0]
-		step = 1
-
-		while queue:
-			curr_level = len(queue)
-			for i in range(curr_level):
-				current = queue.pop(0)
-				go_left = current - step
-				go_right = current + step
-				
-				if go_left == target or go_right == target:
-					return step
-				
-				queue += [go_left, go_right]
-			step += 1
-		
-		return -1
+    def reachNumber(self, target: int) -> int:
+        t=abs(target)
+        n=math.floor(math.sqrt(2*t))
+        while True:
+            to_minus=((n+1)*n)/2-t
+            if to_minus>=0:
+                if to_minus%2==0:
+                    return int(n)
+            n+=1
