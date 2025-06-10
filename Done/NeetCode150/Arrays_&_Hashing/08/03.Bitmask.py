@@ -21,4 +21,4 @@ class Solution:
                 cols[c] |= (1 << val)
                 squares[(r // 3) * 3 + (c // 3)] |= (1 << val)
 
-        return Tru
+        return True
