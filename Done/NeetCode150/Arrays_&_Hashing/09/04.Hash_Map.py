@@ -9,4 +9,4 @@ class Solution:
                 mp[num - mp[num - 1]] = mp[num]
                 mp[num + mp[num + 1]] = mp[num]
                 res = max(res, mp[num])
-        return res
+        return re
