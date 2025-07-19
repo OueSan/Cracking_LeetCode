@@ -1,25 +1,31 @@
 class Solution {
-public:
-    int solve(int i,int j,int &a,int &b,int p,vector<vector<int>> &dp,vector<int> &v1,vector<int> &v2){
-        if(i==a){
+private:
+    int helper(int idx, int prev, vector<int> &arr1, vector<int> &arr2) {
+        //Base case
+        if(idx == arr1.size()) {
             return 0;
         }
-        j = upper_bound(v2.begin()+j,v2.end(),p)-v2.begin();
-        if(dp[i][j] != -1)return dp[i][j];
-        if(j==b && v1[i]<=p)return 2001;
-        int take = 2001,nottake = 2001;
-        if(j!=b)
-        take = solve(i+1,j+1,a,b,v2[j],dp,v1,v2)+1;
-        if(v1[i]>p)
-        nottake = solve(i+1,j,a,b,v1[i],dp,v1,v2);
-        return dp[i][j] = min(take,nottake);
+
+        //Explore all paths;
+        int replace = 1e9, not_replace = 1e9;
+
+        //Replace
+        int i = upper_bound(arr2.begin(), arr2.end(), prev) - arr2.begin();
+        if(i < arr2.size()) {
+            replace = 1 + helper(idx + 1, arr2[i], arr1, arr2);            
+        }
+
+        //Not replace
+        if(arr1[idx] > prev) {
+            not_replace = helper(idx + 1, arr1[idx], arr1, arr2);
+        }
+
+        return min(replace, not_replace);
     }
+public:
     int makeArrayIncreasing(vector<int>& arr1, vector<int>& arr2) {
-        int n = arr1.size(),m=arr2.size();
-        vector<vector<int>> dp(2001,vector<int>(2001,-1));
-        sort(arr2.begin(),arr2.end());
-        int a= solve(0,0,n,m,-1,dp,arr1,arr2);
-        if(a>n)return -1;
-        return a;
+        sort(arr2.begin(), arr2.end());
+        int res = helper(0, -1, arr1, arr2);
+        return res >= 1e9 ? -1 : res;
     }
 };
