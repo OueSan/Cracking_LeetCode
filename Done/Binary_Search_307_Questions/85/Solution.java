@@ -1,43 +1,24 @@
 class Solution {
-    public int minDays(int[] bloomDay, int m, int k) {
-        if ((long) m * k > bloomDay.length) {
-            return -1;
+    public int findBestValue(int[] arr, int target) {
+        int l, r, mi, s=0, m=-1;
+        for(int v:arr) { s += v; m=Math.max(m,v); }
+
+        if(s<=target) return m; // return the max value since we will keep all nums as is
+
+        for(l=1,r=m;l<r;) {
+            mi=(l+r)/2;
+            s=0;
+            for(int v:arr) s += (v>mi)?mi:v;
+            if(s>=target) r=mi;
+            else          l=mi+1;
         }
-
-        int low = 1, high = (int) 1e9;
-        while (low < high) {
-            int mid = low + (high - low) / 2;
-
-            if (isPossibleBouquets(bloomDay, m, k, mid)) {
-                high = mid;
-            } else {
-                low = mid + 1;
-            }
-        };
-
-        return low;
-    }
-    private boolean isPossibleBouquets(int[] bloomDay, int m, int k, int day) {
-        int total = 0;
-
-        for (int i = 0; i < bloomDay.length; i++) {
-            int count = 0;
-            while (i < bloomDay.length && count < k && bloomDay[i] <= day) {
-                count++;
-                i++;
-            }
-
-            if (count == k) {
-                total++;
-                i--;
-            }
-
-            if (total >= m) {
-                return true;
-            }
+        // check if we are 1 step off the target 
+        int s1=0,s2=0;
+        for(int v:arr) {
+            s1 += (v>l)?(l):v;
+            s2 += (v>l-1)?(l-1):v;
         }
-
-        return false;
+        
+        return (Math.abs(s2-target) <= Math.abs(s1-target)) ? l-1 : l;
     }
-
 }
