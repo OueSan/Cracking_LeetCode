@@ -1,37 +1,33 @@
 class Solution {
 public:
-    int findLengthOfShortestSubarray(vector<int>& arr) {
-        int n = arr.size();
+    int specialArray(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
         
-        // Step 1: Find the longest non-decreasing prefix
-        int left = 0;
-        while (left + 1 < n && arr[left] <= arr[left + 1]) {
-            left++;
-        }
-        
-        // If the entire array is already sorted
-        if (left == n - 1) return 0;
-        
-        // Step 2: Find the longest non-decreasing suffix
-        int right = n - 1;
-        while (right > 0 && arr[right - 1] <= arr[right]) {
-            right--;
-        }
-        
-        // Step 3: Find the minimum length to remove by comparing prefix and suffix
-        int result = min(n - left - 1, right);
-        
-        // Step 4: Use two pointers to find the smallest middle part to remove
-        int i = 0, j = right;
-        while (i <= left && j < n) {
-            if (arr[i] <= arr[j]) {
-                result = min(result, j - i - 1);
-                i++;
-            } else {
-                j++;
+        auto find_number_of_nums = [&](int cur_num) -> int {
+            int left = 0, right = n - 1;
+            int first_index = n;
+
+            while (left <= right) {
+                int mid = (left + right) / 2;
+
+                if (nums[mid] >= cur_num) {
+                    first_index = mid;
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+
+            return n - first_index;
+        };
+
+        for (int candidate_number = 1; candidate_number <= n; ++candidate_number) {
+            if (candidate_number == find_number_of_nums(candidate_number)) {
+                return candidate_number;
             }
         }
-        
-        return result;
+
+        return -1;
     }
 };
