@@ -1,28 +1,21 @@
-import bisect
-
 class Solution:
-
-    def __init__(self):
-        self.events = []
-
-    # Cache decorator to memoize results of function calls
-    @cache
-    def solve(self, i, k):
-        if i >= len(self.events): 
-            return 0
-        if k <= 0: 
-            return 0
-        
-        # Retrieve start time, end time, and value of current event
-        s, e, v = self.events[i]
-        
-        # Find the next event that starts after the current event ends
-        j = bisect.bisect(self.events, [e+1])
-        
-        # We have two options: either take the current event or don't
-        return max(v + self.solve(j, k - 1), self.solve(i + 1, k))
-
     def maxValue(self, events: List[List[int]], k: int) -> int:
-        events.sort()  # Sort events based on their start times
-        self.events = events
-        return self.solve(0, k)
+        n = len(events)
+        events.sort(key = lambda x: x[1])
+        ends = [e[1] for e in events]
+        dps = []
+        for i, (start, end, value) in enumerate(events):
+            last_attend_index = bisect.bisect_left(ends, start) - 1
+            new_dp = dps[i - 1][:] if i > 0 else [0] * k
+            if value > new_dp[0]:
+                    new_dp[0] = value
+            if last_attend_index >= 0:
+                dp = dps[last_attend_index]
+                for j in range(1, k):
+                    if dp[j - 1] == 0:
+                        break
+                    new_value = dp[j - 1] + value
+                    if new_value > new_dp[j]:
+                        new_dp[j] = new_value
+            dps.append(new_dp)
+        return max(dps[n - 1])
