@@ -1,32 +1,27 @@
 class Solution {
-
-    public List<Integer> survivedRobotsHealths(
-        int[] positions,
-        int[] healths,
-        String directions
-    ) {
-        int n = positions.length;
-        Integer[] indices = new Integer[n];
-        List<Integer> result = new ArrayList<>();
-        Stack<Integer> stack = new Stack<>();
+public:
+    vector<int> survivedRobotsHealths(vector<int>& positions,
+                                      vector<int>& healths, string directions) {
+        int n = positions.size();
+        vector<int> indices(n), result;
+        stack<int> stack;
 
         for (int index = 0; index < n; ++index) {
             indices[index] = index;
         }
 
-        Arrays.sort(
-            indices,
-            (lhs, rhs) -> Integer.compare(positions[lhs], positions[rhs])
-        );
+        sort(indices.begin(), indices.end(),
+             [&](int lhs, int rhs) { return positions[lhs] < positions[rhs]; });
 
         for (int currentIndex : indices) {
             // Add right-moving robots to the stack
-            if (directions.charAt(currentIndex) == 'R') {
+            if (directions[currentIndex] == 'R') {
                 stack.push(currentIndex);
             } else {
-                while (!stack.isEmpty() && healths[currentIndex] > 0) {
+                while (!stack.empty() && healths[currentIndex] > 0) {
                     // Pop the top robot from the stack for collision check
-                    int topIndex = stack.pop();
+                    int topIndex = stack.top();
+                    stack.pop();
 
                     // Top robot survives, current robot is destroyed
                     if (healths[topIndex] > healths[currentIndex]) {
@@ -49,9 +44,9 @@ class Solution {
         // Collect surviving robots
         for (int index = 0; index < n; ++index) {
             if (healths[index] > 0) {
-                result.add(healths[index]);
+                result.push_back(healths[index]);
             }
         }
         return result;
     }
-}
+};
